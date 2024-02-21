@@ -3,19 +3,21 @@ import SwiftUI
 
 struct MapView: View {
     @StateObject private var viewModel = MapViewModel()
-//    @State var camera: MapCameraPosition = .automatic
+    @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     
     var body: some View {
-        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
-            .ignoresSafeArea()
-            .accentColor(.purple)
-            .onAppear {
-                viewModel.checkLocationServisesEnabled()
-            }
+        Map(position: $position) {
+            UserAnnotation()
+        }
+        .mapControls {
+            MapUserLocationButton()
+            MapPitchToggle()
+        }
+        .accentColor(.purple)
     }
 }
 
 
-//#Preview {
-//    ContentView()
-//}
+#Preview {
+    MapView()
+}
