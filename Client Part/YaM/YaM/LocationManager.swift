@@ -22,5 +22,4 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         lastLocation = location
         print(lastLocation!)
     }
-    
 }
