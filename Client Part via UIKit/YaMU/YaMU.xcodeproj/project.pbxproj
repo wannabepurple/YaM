@@ -7,23 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		872D91622B865844006C3C97 /* YaMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872D91612B865844006C3C97 /* YaMApp.swift */; };
-		872D91642B865844006C3C97 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872D91632B865844006C3C97 /* MapView.swift */; };
-		872D91662B865845006C3C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872D91652B865845006C3C97 /* Assets.xcassets */; };
-		872D91692B865845006C3C97 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872D91682B865845006C3C97 /* Preview Assets.xcassets */; };
+		875D69552B8B686200D5DB58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875D69542B8B686200D5DB58 /* AppDelegate.swift */; };
+		875D69572B8B686200D5DB58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875D69562B8B686200D5DB58 /* SceneDelegate.swift */; };
+		875D69592B8B686200D5DB58 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875D69582B8B686200D5DB58 /* MapViewController.swift */; };
+		875D695E2B8B686300D5DB58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 875D695D2B8B686300D5DB58 /* Assets.xcassets */; };
+		875D69612B8B686300D5DB58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 875D695F2B8B686300D5DB58 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		872D915E2B865844006C3C97 /* YaM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YaM.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		872D91612B865844006C3C97 /* YaMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YaMApp.swift; sourceTree = "<group>"; };
-		872D91632B865844006C3C97 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		872D91652B865845006C3C97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		872D91682B865845006C3C97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		872D916F2B866B37006C3C97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		875D69512B8B686200D5DB58 /* YaMU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YaMU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		875D69542B8B686200D5DB58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		875D69562B8B686200D5DB58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		875D69582B8B686200D5DB58 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		875D695D2B8B686300D5DB58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		875D69602B8B686300D5DB58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		875D69622B8B686300D5DB58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		872D915B2B865844006C3C97 /* Frameworks */ = {
+		875D694E2B8B686200D5DB58 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,78 +35,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		872D91552B865844006C3C97 = {
+		875D69482B8B686200D5DB58 = {
 			isa = PBXGroup;
 			children = (
-				872D91602B865844006C3C97 /* YaM */,
-				872D915F2B865844006C3C97 /* Products */,
+				875D69532B8B686200D5DB58 /* YaMU */,
+				875D69522B8B686200D5DB58 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		872D915F2B865844006C3C97 /* Products */ = {
+		875D69522B8B686200D5DB58 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				872D915E2B865844006C3C97 /* YaM.app */,
+				875D69512B8B686200D5DB58 /* YaMU.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		872D91602B865844006C3C97 /* YaM */ = {
+		875D69532B8B686200D5DB58 /* YaMU */ = {
 			isa = PBXGroup;
 			children = (
-				872D916F2B866B37006C3C97 /* Info.plist */,
-				872D91612B865844006C3C97 /* YaMApp.swift */,
-				872D91632B865844006C3C97 /* MapView.swift */,
-				872D91652B865845006C3C97 /* Assets.xcassets */,
-				872D91672B865845006C3C97 /* Preview Content */,
+				875D69542B8B686200D5DB58 /* AppDelegate.swift */,
+				875D69562B8B686200D5DB58 /* SceneDelegate.swift */,
+				875D69582B8B686200D5DB58 /* MapViewController.swift */,
+				875D695D2B8B686300D5DB58 /* Assets.xcassets */,
+				875D695F2B8B686300D5DB58 /* LaunchScreen.storyboard */,
+				875D69622B8B686300D5DB58 /* Info.plist */,
 			);
-			path = YaM;
-			sourceTree = "<group>";
-		};
-		872D91672B865845006C3C97 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				872D91682B865845006C3C97 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
+			path = YaMU;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		872D915D2B865844006C3C97 /* YaM */ = {
+		875D69502B8B686200D5DB58 /* YaMU */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 872D916C2B865845006C3C97 /* Build configuration list for PBXNativeTarget "YaM" */;
+			buildConfigurationList = 875D69652B8B686300D5DB58 /* Build configuration list for PBXNativeTarget "YaMU" */;
 			buildPhases = (
-				872D915A2B865844006C3C97 /* Sources */,
-				872D915B2B865844006C3C97 /* Frameworks */,
-				872D915C2B865844006C3C97 /* Resources */,
+				875D694D2B8B686200D5DB58 /* Sources */,
+				875D694E2B8B686200D5DB58 /* Frameworks */,
+				875D694F2B8B686200D5DB58 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = YaM;
-			productName = YaM;
-			productReference = 872D915E2B865844006C3C97 /* YaM.app */;
+			name = YaMU;
+			productName = YaMU;
+			productReference = 875D69512B8B686200D5DB58 /* YaMU.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		872D91562B865844006C3C97 /* Project object */ = {
+		875D69492B8B686200D5DB58 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
-					872D915D2B865844006C3C97 = {
+					875D69502B8B686200D5DB58 = {
 						CreatedOnToolsVersion = 15.2;
 					};
 				};
 			};
-			buildConfigurationList = 872D91592B865844006C3C97 /* Build configuration list for PBXProject "YaM" */;
+			buildConfigurationList = 875D694C2B8B686200D5DB58 /* Build configuration list for PBXProject "YaMU" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -112,42 +107,54 @@
 				en,
 				Base,
 			);
-			mainGroup = 872D91552B865844006C3C97;
-			productRefGroup = 872D915F2B865844006C3C97 /* Products */;
+			mainGroup = 875D69482B8B686200D5DB58;
+			productRefGroup = 875D69522B8B686200D5DB58 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				872D915D2B865844006C3C97 /* YaM */,
+				875D69502B8B686200D5DB58 /* YaMU */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		872D915C2B865844006C3C97 /* Resources */ = {
+		875D694F2B8B686200D5DB58 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				872D91692B865845006C3C97 /* Preview Assets.xcassets in Resources */,
-				872D91662B865845006C3C97 /* Assets.xcassets in Resources */,
+				875D69612B8B686300D5DB58 /* LaunchScreen.storyboard in Resources */,
+				875D695E2B8B686300D5DB58 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		872D915A2B865844006C3C97 /* Sources */ = {
+		875D694D2B8B686200D5DB58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				872D91642B865844006C3C97 /* MapView.swift in Sources */,
-				872D91622B865844006C3C97 /* YaMApp.swift in Sources */,
+				875D69592B8B686200D5DB58 /* MapViewController.swift in Sources */,
+				875D69552B8B686200D5DB58 /* AppDelegate.swift in Sources */,
+				875D69572B8B686200D5DB58 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		875D695F2B8B686300D5DB58 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				875D69602B8B686300D5DB58 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		872D916A2B865845006C3C97 /* Debug */ = {
+		875D69632B8B686300D5DB58 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -199,7 +206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -210,7 +217,7 @@
 			};
 			name = Debug;
 		};
-		872D916B2B865845006C3C97 /* Release */ = {
+		875D69642B8B686300D5DB58 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -256,7 +263,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -266,31 +273,27 @@
 			};
 			name = Release;
 		};
-		872D916D2B865845006C3C97 /* Debug */ = {
+		875D69662B8B686300D5DB58 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"YaM/Preview Content\"";
 				DEVELOPMENT_TEAM = FP582B2GU2;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = YaM/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = YaMU/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wannabepurple.YaM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wannabepurple.YaMU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -298,31 +301,27 @@
 			};
 			name = Debug;
 		};
-		872D916E2B865845006C3C97 /* Release */ = {
+		875D69672B8B686300D5DB58 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"YaM/Preview Content\"";
 				DEVELOPMENT_TEAM = FP582B2GU2;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = YaM/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = YaMU/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wannabepurple.YaM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wannabepurple.YaMU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -333,25 +332,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		872D91592B865844006C3C97 /* Build configuration list for PBXProject "YaM" */ = {
+		875D694C2B8B686200D5DB58 /* Build configuration list for PBXProject "YaMU" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				872D916A2B865845006C3C97 /* Debug */,
-				872D916B2B865845006C3C97 /* Release */,
+				875D69632B8B686300D5DB58 /* Debug */,
+				875D69642B8B686300D5DB58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		872D916C2B865845006C3C97 /* Build configuration list for PBXNativeTarget "YaM" */ = {
+		875D69652B8B686300D5DB58 /* Build configuration list for PBXNativeTarget "YaMU" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				872D916D2B865845006C3C97 /* Debug */,
-				872D916E2B865845006C3C97 /* Release */,
+				875D69662B8B686300D5DB58 /* Debug */,
+				875D69672B8B686300D5DB58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 872D91562B865844006C3C97 /* Project object */;
+	rootObject = 875D69492B8B686200D5DB58 /* Project object */;
 }
