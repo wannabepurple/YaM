@@ -38,7 +38,6 @@ class MapViewController: UIViewController {
         setupMap()
         setupCurrentLocationButton()
     }
-    
     private func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
