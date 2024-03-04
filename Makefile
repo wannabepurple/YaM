@@ -1,6 +1,9 @@
 all: push
 
-push: 
+ignore:
+	echo ".DS_Store" > .gitignore
+
+push:
 	git add -A
-	git commit -m "yam.wannabepurple"
+	git commit -m "wannabepurple"
 	git push
