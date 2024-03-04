@@ -112,16 +112,32 @@
 		875D69532B8B686200D5DB58 /* YaM */ = {
 			isa = PBXGroup;
 			children = (
-				875D69542B8B686200D5DB58 /* AppDelegate.swift */,
-				875D69562B8B686200D5DB58 /* SceneDelegate.swift */,
+				87F1AD322B962832003C5634 /* Application */,
 				875D69582B8B686200D5DB58 /* MapViewController.swift */,
 				87CC08582B8BB47D00AD1BC6 /* LocationManager.swift */,
-				875D695D2B8B686300D5DB58 /* Assets.xcassets */,
-				875D695F2B8B686300D5DB58 /* LaunchScreen.storyboard */,
+				87F1AD332B962861003C5634 /* Support */,
+			);
+			path = YaM;
+			sourceTree = "<group>";
+		};
+		87F1AD322B962832003C5634 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				875D69542B8B686200D5DB58 /* AppDelegate.swift */,
+				875D69562B8B686200D5DB58 /* SceneDelegate.swift */,
 				875D69622B8B686300D5DB58 /* Info.plist */,
 				87CC081F2B8BA90300AD1BC6 /* GoogleService-Info.plist */,
 			);
-			path = YaM;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		87F1AD332B962861003C5634 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				875D695D2B8B686300D5DB58 /* Assets.xcassets */,
+				875D695F2B8B686300D5DB58 /* LaunchScreen.storyboard */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -8,10 +8,6 @@ class MapViewController: UIViewController {
     
     private var currentUserLatitude = 0.0
     private var currentUserLongitude = 0.0
-    private func getCoordinates() {
-        currentUserLatitude = locationManager.lastLocation?.coordinate.latitude ?? 0
-        currentUserLongitude = locationManager.lastLocation?.coordinate.longitude ?? 0
-    }
 
     private let map: MKMapView = {
         let map = MKMapView()
@@ -43,9 +39,20 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+    }
+    
+    private func setViewController() {
         setMap()
         setCurrentUserLocationButton()
         sendLocationToServer(withInterval: 5)
+    }
+    
+    private func getCoordinates() {
+        currentUserLatitude = locationManager.lastLocation?.coordinate.latitude ?? 0
+        currentUserLongitude = locationManager.lastLocation?.coordinate.longitude ?? 0
     }
     
     private func setMap() {
@@ -170,5 +177,6 @@ class MapViewController: UIViewController {
         task.resume()
     }
 */
+    
     
 }
