@@ -1,4 +1,5 @@
 import CoreLocation
+import FirebaseDatabase
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     private var locationManager: CLLocationManager!
@@ -20,6 +21,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         lastLocation = location
-        print(lastLocation!)
+//        print(lastLocation!)
     }
 }

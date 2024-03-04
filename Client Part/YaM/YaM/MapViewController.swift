@@ -20,7 +20,8 @@ class MapViewController: UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 20
         button.backgroundColor = .black
-        button.setTitle("Your current location", for: .normal)
+        button.setImage(UIImage(named:"me")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .green
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.setTitleColor(.green, for: .normal)
         button.configuration?.titleAlignment = .center
@@ -37,17 +38,128 @@ class MapViewController: UIViewController {
 //        getLocationFromServer()
     }
 
+    private let anotherLocationButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 20
+        button.backgroundColor = .black
+        button.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .green
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        button.setTitleColor(.green, for: .normal)
+        button.configuration?.titleAlignment = .center
+        button.addTarget(self, action: #selector(showAnotherLocation), for: .touchUpInside)
+        return button
+    }()
+    /*
+    @objc private func showAnotherLocation() {
+        // URL базы данных Firebase
+        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
+        
+        // Проверка URL на валидность
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        // Создает асинхронную задачу (dataTask) для получения данных с сервера
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching location data: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                // Десериализация JSON-данных в словарь
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
+                    for (key, value) in json {
+                        if let latitude = value["latitude"], let longitude = value["longitude"] {
+                            // Обновление карты или выполнение других действий с полученными координатами
+                            print("Received location for key \(key) - Latitude: \(latitude), Longitude: \(longitude)")
+                            
+                            // Добавьте свою логику для обновления карты или других действий с полученными данными
+                        } else {
+                            print("Invalid or incomplete location data for key \(key)")
+                        }
+                    }
+                } else {
+                    print("Failed to parse JSON")
+                }
+            } catch {
+                print("Error deserializing location data: \(error.localizedDescription)")
+            }
+        }
+        
+        // Запускает выполнение асинхронной задачи
+        task.resume()
+    }
+    */
+    @objc private func showAnotherLocation() {
+        // URL базы данных Firebase
+        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
+        
+        // Проверка URL на валидность
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        // Создает асинхронную задачу (dataTask) для получения данных с сервера
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching location data: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                // Десериализация JSON-данных в словарь
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
+                    let valuesArray = Array(json.values)
+                    if let lastLocation = valuesArray.last {
+                        if let latitude = lastLocation["latitude"], let longitude = lastLocation["longitude"] {
+                            // Обновление карты или выполнение других действий с полученными координатами
+                            print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
+                            
+                            // Добавьте свою логику для обновления карты или других действий с полученными данными
+                        } else {
+                            print("Invalid or incomplete location data")
+                        }
+                    } else {
+                        print("No location data available")
+                    }
+                } else {
+                    print("Failed to parse JSON")
+                }
+            } catch {
+                print("Error deserializing location data: \(error.localizedDescription)")
+            }
+        }
+        
+        // Запускает выполнение асинхронной задачи
+        task.resume()
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
+        setViewController()
     }
-    
+
     private func setViewController() {
         setMap()
         setCurrentUserLocationButton()
-        sendLocationToServer(withInterval: 5)
+        sendLocationToServer(withInterval: 30)
+        setAnotherLocationButton()
     }
     
     private func getCoordinates() {
@@ -73,9 +185,19 @@ class MapViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             currentLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            currentLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
-            currentLocationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
-            currentLocationButton.heightAnchor.constraint(equalToConstant: 60)
+            currentLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            currentLocationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),            currentLocationButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
+    private func setAnotherLocationButton() {
+        view.addSubview(anotherLocationButton)
+        anotherLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            anotherLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            anotherLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            anotherLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),            anotherLocationButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
@@ -128,55 +250,5 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    /*
-    private func getLocationFromServer() {
-        // URL базы данных Firebase
-        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/"
-        
-        // Проверка URL на валидность
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
-        
-        // Создает экземпляр URLRequest с заданным URL (url)
-        var request = URLRequest(url: url)
-        
-        // Устанавливает метод HTTP-запроса как GET, потому что мы получаем данные с сервера
-        request.httpMethod = "GET"
-        
-        // Создает асинхронную задачу (dataTask) для получения данных с сервера. Замыкание будет выполнено после завершения задачи
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error fetching location from server: \(error.localizedDescription)")
-            } else if let data = data {
-                do {
-                    // Преобразует полученные данные в массив JSON
-                    if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
-                        for json in jsonArray {
-                            // Извлекает координаты из каждого объекта
-                            if let latitude = json["latitude"] as? Double,
-                               let longitude = json["longitude"] as? Double {
-                                print("Location received from server - Latitude: \(latitude), Longitude: \(longitude)")
-                                
-                                // Здесь вы можете использовать полученные координаты по вашему усмотрению
-                            } else {
-                                print("Invalid data format for coordinates in server response")
-                            }
-                        }
-                    } else {
-                        print("Invalid data format from server - Not an array")
-                    }
-                } catch {
-                    print("Error parsing JSON data: \(error.localizedDescription)")
-                }
-            }
-        }
-        // Запускает выполнение асинхронной задачи. Запрос отправляется на сервер, и после завершения задачи выполнится замыкание
-        task.resume()
-    }
-*/
-    
-    
+
 }
