@@ -8,40 +8,10 @@ class MapViewController: UIViewController {
     private var locationManager = LocationManager()
     private var currentUserLatitude = 0.0
     private var currentUserLongitude = 0.0
-
-    private let map: MKMapView = {
-        let map = MKMapView()
-        map.showsUserLocation = true
-        map.tintColor = .green
-        return map
-    }()
-    
-    private let currentLocationButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 20
-        button.backgroundColor = .black
-        button.setImage(UIImage(named:"me")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .green
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        button.setTitleColor(.green, for: .normal)
-        button.configuration?.titleAlignment = .center
-        button.addTarget(self, action: #selector(showCurrentLocation), for: .touchUpInside)
-        return button
-    }()
-    
-
-    private let friendLocationButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 20
-        button.backgroundColor = .black
-        button.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .green
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        button.setTitleColor(.green, for: .normal)
-        button.configuration?.titleAlignment = .center
-        button.addTarget(self, action: #selector(showFriendLocation), for: .touchUpInside)
-        return button
-    }()
+    private let map = MKMapView()
+    private let currentLocationButton = UIButton()
+    private let friendLocationButton = UIButton()
+    private let userIdentifier = UIDevice.current.identifierForVendor?.uuidString ?? "Unknown"
     
 
     override func viewDidLoad() {
@@ -74,6 +44,7 @@ extension MapViewController {
             self.getCoordinates()
             // Данные для отправки
             let locationData: [String: Any] = [
+                "id": self.userIdentifier,
                 "latitude": self.currentUserLatitude,
                 "longitude": self.currentUserLongitude
             ]
@@ -84,6 +55,7 @@ extension MapViewController {
                 
                 // Создает экземпляр URLRequest с заданным URL (url)
                 var request = URLRequest(url: url)
+                
                 // Устанавливает метод HTTP-запроса как POST, потому что мы ОТПРАВЛЯЕМ данные на сервер
                 request.httpMethod = "POST"
                 
@@ -117,18 +89,51 @@ extension MapViewController {
         map.setRegion(region, animated: true)
     }
     
+//    @objc private func showFriendLocation() {
+//        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
+//        
+//        guard let url = URL(string: urlString) else {
+//            print("Invalid URL")
+//            return
+//        }
+//        
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let error = error {
+//                print("Error fetching location data: \(error.localizedDescription)")
+//                return
+//            }
+//            
+//            guard let data = data else {
+//                print("No data received")
+//                return
+//            }
+//            
+//            do {
+//                if let json = try JSONSerialization.jsonObject(with: data) as? [String: [String: Double]],
+//                   let lastLocation = Array(json.values).last,
+//                   let latitude = lastLocation["latitude"],
+//                   let longitude = lastLocation["longitude"] {
+//                    print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
+//                    // Добавьте свою логику для обновления карты или других действий с полученными данными
+//                } else {
+//                    print("Invalid or incomplete location data")
+//                }
+//            } catch {
+//                print("Error deserializing location data: \(error.localizedDescription)")
+//            }
+//        }.resume()
+//    }
+
+    
     @objc private func showFriendLocation() {
-        // URL базы данных Firebase
         let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
         
-        // Проверка URL на валидность
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return
         }
         
-        // Создает асинхронную задачу (dataTask) для получения данных с сервера
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching location data: \(error.localizedDescription)")
                 return
@@ -140,20 +145,29 @@ extension MapViewController {
             }
             
             do {
-                // Десериализация JSON-данных в словарь
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
-                    let valuesArray = Array(json.values)
-                    if let lastLocation = valuesArray.last {
-                        if let latitude = lastLocation["latitude"], let longitude = lastLocation["longitude"] {
-                            // Обновление карты или выполнение других действий с полученными координатами
-                            print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
-                            
-                            // Добавьте свою логику для обновления карты или других действий с полученными данными
-                        } else {
-                            print("Invalid or incomplete location data")
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                    // Переменная для хранения последнего местоположения друга
+                    var lastFriendLocation: [String: Any]?
+                    // Перебираем все пары ключ-значение в словаре
+                    for (key, value) in json.reversed() {
+                        // Проверяем, является ли это местоположение друга (не мое)
+                        let position = value as! [String: Any]?
+                        if position?["id"] as! String != self.userIdentifier {
+                            // Обновляем последнее местоположение друга
+                            lastFriendLocation = position
+                            print("Loc found successfully")
+                            break
                         }
+                    }
+                    
+                    // Проверяем, удалось получить последнее местоположение друга
+                    if let lastLocation = lastFriendLocation,
+                       let latitude = lastLocation["latitude"],
+                       let longitude = lastLocation["longitude"] {
+                        print("Friend's latest location - Latitude: \(latitude), Longitude: \(longitude)")
+                        // Добавьте свою логику для обновления карты или других действий с полученными данными
                     } else {
-                        print("No location data available")
+                        print("No location data available for friend")
                     }
                 } else {
                     print("Failed to parse JSON")
@@ -161,12 +175,10 @@ extension MapViewController {
             } catch {
                 print("Error deserializing location data: \(error.localizedDescription)")
             }
-        }
-        
-        // Запускает выполнение асинхронной задачи
-        task.resume()
+        }.resume()
     }
 
+    
 }
 
 
@@ -181,6 +193,8 @@ extension MapViewController {
     
     private func setMap() {
         view.addSubview(map)
+        map.showsUserLocation = true
+        map.tintColor = .green
         map.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -193,6 +207,15 @@ extension MapViewController {
     
     private func setCurrentUserLocationButton() {
         view.addSubview(currentLocationButton)
+        currentLocationButton.layer.cornerRadius = 20
+        currentLocationButton.backgroundColor = .black
+        currentLocationButton.setImage(UIImage(named:"me")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        currentLocationButton.tintColor = .green
+        currentLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        currentLocationButton.setTitleColor(.green, for: .normal)
+        currentLocationButton.configuration?.titleAlignment = .center
+        currentLocationButton.addTarget(self, action: #selector(showCurrentLocation), for: .touchUpInside)
+        
         currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -204,6 +227,15 @@ extension MapViewController {
     
     private func setAnotherLocationButton() {
         view.addSubview(friendLocationButton)
+        friendLocationButton.layer.cornerRadius = 20
+        friendLocationButton.backgroundColor = .black
+        friendLocationButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        friendLocationButton.tintColor = .green
+        friendLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        friendLocationButton.setTitleColor(.green, for: .normal)
+        friendLocationButton.configuration?.titleAlignment = .center
+        friendLocationButton.addTarget(self, action: #selector(showFriendLocation), for: .touchUpInside)
+        
         friendLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
