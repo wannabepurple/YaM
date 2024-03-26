@@ -4,8 +4,8 @@ import FirebaseDatabase
 
 class MapViewController: UIViewController {
     
+    private let locMan = UIView()
     private var locationManager = LocationManager()
-    
     private var currentUserLatitude = 0.0
     private var currentUserLongitude = 0.0
 
@@ -29,16 +29,8 @@ class MapViewController: UIViewController {
         return button
     }()
     
-    @objc private func showCurrentLocation() {
-        getCoordinates()
-        let center = CLLocationCoordinate2D(latitude: currentUserLatitude, longitude: currentUserLongitude)
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: center, span: span)
-        map.setRegion(region, animated: true)
-//        getLocationFromServer()
-    }
 
-    private let anotherLocationButton: UIButton = {
+    private let friendLocationButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 20
         button.backgroundColor = .black
@@ -47,158 +39,24 @@ class MapViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.setTitleColor(.green, for: .normal)
         button.configuration?.titleAlignment = .center
-        button.addTarget(self, action: #selector(showAnotherLocation), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showFriendLocation), for: .touchUpInside)
         return button
     }()
-    /*
-    @objc private func showAnotherLocation() {
-        // URL базы данных Firebase
-        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
-        
-        // Проверка URL на валидность
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
-        
-        // Создает асинхронную задачу (dataTask) для получения данных с сервера
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching location data: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            do {
-                // Десериализация JSON-данных в словарь
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
-                    for (key, value) in json {
-                        if let latitude = value["latitude"], let longitude = value["longitude"] {
-                            // Обновление карты или выполнение других действий с полученными координатами
-                            print("Received location for key \(key) - Latitude: \(latitude), Longitude: \(longitude)")
-                            
-                            // Добавьте свою логику для обновления карты или других действий с полученными данными
-                        } else {
-                            print("Invalid or incomplete location data for key \(key)")
-                        }
-                    }
-                } else {
-                    print("Failed to parse JSON")
-                }
-            } catch {
-                print("Error deserializing location data: \(error.localizedDescription)")
-            }
-        }
-        
-        // Запускает выполнение асинхронной задачи
-        task.resume()
-    }
-    */
-    @objc private func showAnotherLocation() {
-        // URL базы данных Firebase
-        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
-        
-        // Проверка URL на валидность
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
-        
-        // Создает асинхронную задачу (dataTask) для получения данных с сервера
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching location data: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            do {
-                // Десериализация JSON-данных в словарь
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
-                    let valuesArray = Array(json.values)
-                    if let lastLocation = valuesArray.last {
-                        if let latitude = lastLocation["latitude"], let longitude = lastLocation["longitude"] {
-                            // Обновление карты или выполнение других действий с полученными координатами
-                            print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
-                            
-                            // Добавьте свою логику для обновления карты или других действий с полученными данными
-                        } else {
-                            print("Invalid or incomplete location data")
-                        }
-                    } else {
-                        print("No location data available")
-                    }
-                } else {
-                    print("Failed to parse JSON")
-                }
-            } catch {
-                print("Error deserializing location data: \(error.localizedDescription)")
-            }
-        }
-        
-        // Запускает выполнение асинхронной задачи
-        task.resume()
-    }
-
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setViewController()
     }
+}
 
-    private func setViewController() {
-        setMap()
-        setCurrentUserLocationButton()
-        sendLocationToServer(withInterval: 30)
-        setAnotherLocationButton()
-    }
-    
+
+// MARK: Server + location logic
+extension MapViewController {
     private func getCoordinates() {
         currentUserLatitude = locationManager.lastLocation?.coordinate.latitude ?? 0
         currentUserLongitude = locationManager.lastLocation?.coordinate.longitude ?? 0
-    }
-    
-    private func setMap() {
-        view.addSubview(map)
-        map.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            map.topAnchor.constraint(equalTo: view.topAnchor),
-            map.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            map.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            map.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-    
-    private func setCurrentUserLocationButton() {
-        view.addSubview(currentLocationButton)
-        currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            currentLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            currentLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
-            currentLocationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),            currentLocationButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
-    }
-    
-    private func setAnotherLocationButton() {
-        view.addSubview(anotherLocationButton)
-        anotherLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            anotherLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            anotherLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
-            anotherLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),            anotherLocationButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
     }
     
     private func sendLocationToServer(withInterval: TimeInterval) {
@@ -250,5 +108,110 @@ class MapViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func showCurrentLocation() {
+        getCoordinates()
+        let center = CLLocationCoordinate2D(latitude: currentUserLatitude, longitude: currentUserLongitude)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: center, span: span)
+        map.setRegion(region, animated: true)
+    }
+    
+    @objc private func showFriendLocation() {
+        // URL базы данных Firebase
+        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
+        
+        // Проверка URL на валидность
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        // Создает асинхронную задачу (dataTask) для получения данных с сервера
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching location data: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                // Десериализация JSON-данных в словарь
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: Double]] {
+                    let valuesArray = Array(json.values)
+                    if let lastLocation = valuesArray.last {
+                        if let latitude = lastLocation["latitude"], let longitude = lastLocation["longitude"] {
+                            // Обновление карты или выполнение других действий с полученными координатами
+                            print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
+                            
+                            // Добавьте свою логику для обновления карты или других действий с полученными данными
+                        } else {
+                            print("Invalid or incomplete location data")
+                        }
+                    } else {
+                        print("No location data available")
+                    }
+                } else {
+                    print("Failed to parse JSON")
+                }
+            } catch {
+                print("Error deserializing location data: \(error.localizedDescription)")
+            }
+        }
+        
+        // Запускает выполнение асинхронной задачи
+        task.resume()
+    }
+
+}
+
+
+// MARK: UI + Position
+extension MapViewController {
+    private func setViewController() {
+        setMap()
+        setCurrentUserLocationButton()
+        sendLocationToServer(withInterval: 5)
+        setAnotherLocationButton()
+    }
+    
+    private func setMap() {
+        view.addSubview(map)
+        map.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            map.topAnchor.constraint(equalTo: view.topAnchor),
+            map.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            map.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            map.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+    
+    private func setCurrentUserLocationButton() {
+        view.addSubview(currentLocationButton)
+        currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            currentLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            currentLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            currentLocationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),            currentLocationButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
+    private func setAnotherLocationButton() {
+        view.addSubview(friendLocationButton)
+        friendLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            friendLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            friendLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            friendLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),            friendLocationButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
 
 }

@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:810646882514:ios:cfbf9e51d9ec67efbc850b</string>
+	<key>DATABASE_URL</key>
+	<string>https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
