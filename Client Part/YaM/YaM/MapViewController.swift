@@ -112,7 +112,7 @@ extension MapViewController {
                     // Переменная для хранения последнего местоположения друга
                     var lastFriendLocation: [String: Any]?
                     // Перебираем все пары ключ-значение в словаре
-                    for (key, value) in json.reversed() {
+                    for (_, value) in json.reversed() {
                         // Проверяем, является ли это местоположение друга (не мое)
                         let position = value as! [String: Any]?
                         if position?["id"] as! String != self.selfID {
