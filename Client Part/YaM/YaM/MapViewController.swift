@@ -9,11 +9,10 @@ class MapViewController: UIViewController {
     private var currentUserLatitude = 0.0
     private var currentUserLongitude = 0.0
     private let map = MKMapView()
-    private let currentLocationButton = UIButton() // self location
-    private let friendLocationButton = UIButton() // another user location
-    private let userIdentifier = UIDevice.current.identifierForVendor?.uuidString ?? "Unknown"
+    private let selfLocationButton = UIButton() // self location
+    private let anotherLocationButton = UIButton() // another user location
+    private let selfID = UIDevice.current.identifierForVendor?.uuidString ?? "Unknown"
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,7 +43,7 @@ extension MapViewController {
             self.getCoordinates()
             // Данные для отправки
             let locationData: [String: Any] = [
-                "id": self.userIdentifier,
+                "id": self.selfID,
                 "latitude": self.currentUserLatitude,
                 "longitude": self.currentUserLongitude
             ]
@@ -116,7 +115,7 @@ extension MapViewController {
                     for (key, value) in json.reversed() {
                         // Проверяем, является ли это местоположение друга (не мое)
                         let position = value as! [String: Any]?
-                        if position?["id"] as! String != self.userIdentifier {
+                        if position?["id"] as! String != self.selfID {
                             // Обновляем последнее местоположение друга
                             lastFriendLocation = position
                             print("Loc found successfully")
@@ -170,42 +169,42 @@ extension MapViewController {
     }
     
     private func setCurrentUserLocationButton() {
-        view.addSubview(currentLocationButton)
-        currentLocationButton.layer.cornerRadius = 20
-        currentLocationButton.backgroundColor = .black
-        currentLocationButton.setImage(UIImage(named:"me")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        currentLocationButton.tintColor = .green
-        currentLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        currentLocationButton.setTitleColor(.green, for: .normal)
-        currentLocationButton.configuration?.titleAlignment = .center
-        currentLocationButton.addTarget(self, action: #selector(showCurrentLocation), for: .touchUpInside)
+        view.addSubview(selfLocationButton)
+        selfLocationButton.layer.cornerRadius = 20
+        selfLocationButton.backgroundColor = .black
+        selfLocationButton.setImage(UIImage(named:"me")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        selfLocationButton.tintColor = .green
+        selfLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        selfLocationButton.setTitleColor(.green, for: .normal)
+        selfLocationButton.configuration?.titleAlignment = .center
+        selfLocationButton.addTarget(self, action: #selector(showCurrentLocation), for: .touchUpInside)
         
-        currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        selfLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            currentLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            currentLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
-            currentLocationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),            currentLocationButton.heightAnchor.constraint(equalToConstant: 60)
+            selfLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            selfLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            selfLocationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),            selfLocationButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
     private func setAnotherLocationButton() {
-        view.addSubview(friendLocationButton)
-        friendLocationButton.layer.cornerRadius = 20
-        friendLocationButton.backgroundColor = .black
-        friendLocationButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        friendLocationButton.tintColor = .green
-        friendLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        friendLocationButton.setTitleColor(.green, for: .normal)
-        friendLocationButton.configuration?.titleAlignment = .center
-        friendLocationButton.addTarget(self, action: #selector(showFriendLocation), for: .touchUpInside)
+        view.addSubview(anotherLocationButton)
+        anotherLocationButton.layer.cornerRadius = 20
+        anotherLocationButton.backgroundColor = .black
+        anotherLocationButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        anotherLocationButton.tintColor = .green
+        anotherLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        anotherLocationButton.setTitleColor(.green, for: .normal)
+        anotherLocationButton.configuration?.titleAlignment = .center
+        anotherLocationButton.addTarget(self, action: #selector(showFriendLocation), for: .touchUpInside)
         
-        friendLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        anotherLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            friendLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            friendLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
-            friendLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),            friendLocationButton.heightAnchor.constraint(equalToConstant: 60)
+            anotherLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            anotherLocationButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2),
+            anotherLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),            anotherLocationButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
