@@ -9,8 +9,8 @@ class MapViewController: UIViewController {
     private var currentUserLatitude = 0.0
     private var currentUserLongitude = 0.0
     private let map = MKMapView()
-    private let currentLocationButton = UIButton()
-    private let friendLocationButton = UIButton()
+    private let currentLocationButton = UIButton() // self location
+    private let friendLocationButton = UIButton() // another user location
     private let userIdentifier = UIDevice.current.identifierForVendor?.uuidString ?? "Unknown"
     
 
@@ -89,42 +89,6 @@ extension MapViewController {
         map.setRegion(region, animated: true)
     }
     
-//    @objc private func showFriendLocation() {
-//        let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
-//        
-//        guard let url = URL(string: urlString) else {
-//            print("Invalid URL")
-//            return
-//        }
-//        
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            if let error = error {
-//                print("Error fetching location data: \(error.localizedDescription)")
-//                return
-//            }
-//            
-//            guard let data = data else {
-//                print("No data received")
-//                return
-//            }
-//            
-//            do {
-//                if let json = try JSONSerialization.jsonObject(with: data) as? [String: [String: Double]],
-//                   let lastLocation = Array(json.values).last,
-//                   let latitude = lastLocation["latitude"],
-//                   let longitude = lastLocation["longitude"] {
-//                    print("Received latest location - Latitude: \(latitude), Longitude: \(longitude)")
-//                    // Добавьте свою логику для обновления карты или других действий с полученными данными
-//                } else {
-//                    print("Invalid or incomplete location data")
-//                }
-//            } catch {
-//                print("Error deserializing location data: \(error.localizedDescription)")
-//            }
-//        }.resume()
-//    }
-
-    
     @objc private func showFriendLocation() {
         let urlString = "https://yam-server-ad898-default-rtdb.europe-west1.firebasedatabase.app/locations.json"
         
@@ -182,7 +146,7 @@ extension MapViewController {
 }
 
 
-// MARK: UI + Position
+// MARK: UI
 extension MapViewController {
     private func setViewController() {
         setMap()
